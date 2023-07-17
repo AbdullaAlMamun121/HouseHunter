@@ -1,9 +1,8 @@
-import React from 'react';
 
 const SignUp = () => {
     return (
         <div>
-            Sign up 
+            Sign up page: Please singup
         </div>
     );
 };
