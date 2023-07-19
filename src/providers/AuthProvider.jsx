@@ -42,10 +42,10 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  const logout = () => {
+  const logOut = () => {
     setLoading(true);
     return axios
-      .post('/api/logout')
+      .post('http://localhost:5000/logout')
       .then(() => {
         setUser(null);
         setLoading(false);
@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     login: login,
-    logout: logout
+    logOut: logOut
   };
 
   return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
