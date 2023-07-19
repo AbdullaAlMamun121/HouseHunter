@@ -17,7 +17,7 @@ const NavBar = () => {
                 <Link to="/">Home</Link>
             </li>
             <li>
-                <Link to="/about">About</Link>
+                <Link to="/displayHouses">All Houses</Link>
             </li>
             {user && (
                 <li>

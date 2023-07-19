@@ -78,7 +78,7 @@ const HouseList = () => {
                                     <td>{item.address}</td>
                                     <td>{item.city}</td>
                                     <td>{item.price}</td>
-                                    <td>{item.status}</td>
+                                    
                                     <td>
                                         <button
                                             className="btn btn-warning bg-orange-200 hover:bg-orange-400"

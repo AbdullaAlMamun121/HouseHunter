@@ -33,7 +33,7 @@ const Dashboard = () => {
                 <div className="drawer-content flex flex-col items-center justify-center">
                     {/* Page content here */}
                     <Outlet></Outlet>
-                    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open SideBar</label>
+                    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hiddenz">Open SideBar</label>
 
                 </div>
                 <div className="drawer-side">
@@ -55,7 +55,7 @@ const Dashboard = () => {
                                 <kbd className="kbd kbd-lg">Role:{userRole[0]}</kbd>
                                 <ul>
                                     <li><Link to="/dashboard/selectedHouses">Selected House</Link></li>
-                                    <li><Link to="/dashboard/enrolled">Enrolled Houses</Link></li>
+                                    <li><Link to="/dashboard/manageHouses">Manage Houses</Link></li>
                                     <li><Link to="/">Go Home</Link></li>
                                 </ul>
 
