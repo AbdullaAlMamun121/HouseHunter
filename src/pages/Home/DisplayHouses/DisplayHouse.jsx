@@ -16,7 +16,7 @@ const DisplayHouse = () => {
 
   const { data: houses = [] } = useQuery(['houses', filters], async () => {
     const res = await axios.get('http://localhost:5000/houses/show', { params: filters });
-    return res.data;
+    return res.data.slice(0,10);
   });
 
   const handleFilterChange = (e) => {
