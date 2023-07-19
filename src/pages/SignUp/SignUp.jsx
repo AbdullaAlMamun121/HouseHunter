@@ -1,39 +1,18 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { saveUserInDB } from "../../api/auth";
 
 const SignUp = () => {
 
-    const navigate = useNavigate();
-
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUserProfile } = useAuth();
-
-    const onSubmit = event => {
-        const name = event.name;
+   
+    const onSubmit = async event => {
+        const phoneNumber = event.phoneNumber;
         const email = event.email;
         const password = event.password;
+        const userRole = event.role;
+        saveUserInDB(phoneNumber,email,password,userRole);
 
-        createUser(email, password)
-            .then(result => {
-                const signUpUser = result.user;
-                console.log(signUpUser);
-
-                updateUserProfile(name)
-                    .then(() => {
-                        console.log('user profile updated');
-                        // saveUserInDd(result.user);
-                        alert('User created successfully');
-                        navigate('/');
-                    })
-                    .catch(error => {
-                        console.error(error.message);
-                        alert(error.message);
-                    });
-            })
-            .catch(err => {
-                console.log(err);
-            });
     }
 
     return (
@@ -51,18 +30,22 @@ const SignUp = () => {
                 >
                     <div className='space-y-4'>
                         <div>
-                            <label htmlFor='name' className='block mb-2 text-sm'>
-                                User Name
+                            <label htmlFor='phoneNumber' className='block mb-2 text-sm'>
+                                 Phone Number
                             </label>
                             <input
-                                type='name'
-                                name='name'
-                                placeholder='Enter Your Name'
+                                type='number'
+                                name='phoneNumber'
+                                placeholder='Enter Your Number'
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-white text-blue-900'
                                 data-temp-mail-org='0'
-                                {...register('name', { required: true })}
+                                {...register('phoneNumber', {
+                                     required: true,
+                                     minLength:11, 
+                                     pattern: /^01[3-9]\d{8}$/,
+                                    })}
                             />
-                            {errors.name && <span>Name is required</span>}
+                            {errors.phoneNumber && <span>Number must be 11 digit and only for BD Number support</span>}
                         </div>
                         <div>
                             <label htmlFor='email' className='block mb-2 text-sm'>
@@ -102,6 +85,11 @@ const SignUp = () => {
                                 </span>
                             )}
                         </div>
+                        <select className="select select-info w-full" {...register('role',{required:true})}>
+                            <option disabled selected>Select Role</option>
+                            <option value="houseOwner">House Owner</option>
+                            <option value="houseRenter">House Renter</option>
+                        </select>
 
                     </div>
 
@@ -116,7 +104,7 @@ const SignUp = () => {
                 </form>
 
                 <p className='px-6 py-0 text-sm text-center text-blue-400'>
-                    Don't have an account?
+                    Already have an account?
                     <Link
                         to='/login'
                         className='hover:underline hover:text-violet-400 text-blue-400'
