@@ -6,11 +6,15 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const token = localStorage.getItem('token');
   useEffect(() => {
     // Check if the user is authenticated on the server
     axios
-      .get('http://localhost:5000/users/checkAuth')
+      .get('http://localhost:5000/users/checkAuth', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(response => {
         const userData = response.data;
         setUser(userData);
@@ -21,6 +25,7 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       });
   }, []);
+  
 
   const login = (email, password) => {
     setLoading(true);

@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 const image_hosting_token = import.meta.env.VITE_Image_Upload_Token;
 
 const AddHouse = () => {
-
+    const token = localStorage.getItem('token');
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
+
 
     const onSubmit = (data) => {
         const formData = new FormData();
@@ -22,10 +23,14 @@ const AddHouse = () => {
                 // create new object to input mongodb
                 const newItems = { name, address, city, bedrooms: parseInt(bedrooms), bathrooms: parseInt(bathrooms), roomSize: parseFloat(roomSize), availableDate,image:imageURL, price: parseFloat(price), phoneNumber, description }
                 // accessing mongodb to input
-                axios.post('http://localhost:5000/houses', newItems).then(data => {
+                axios.post('http://localhost:5000/houses', newItems, {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }).then(data => {
                     if (data.data.insertedId) {
-                        reset();
-                        alert('Data uploaded successfully');
+                      reset();
+                      alert('Data uploaded successfully');
                     }
                 })
 
